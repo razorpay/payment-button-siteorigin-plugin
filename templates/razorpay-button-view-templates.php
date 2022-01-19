@@ -1,13 +1,5 @@
 <?php
 
-use Razorpay\Api\Api;
-use Razorpay\Api\Errors;
-use Razorpay\PaymentButton\Errors as BtnErrors;
-
-require_once __DIR__ . '/../includes/rzp-payment-buttons.php';
-require_once __DIR__.'/../razorpay-sdk/Razorpay.php';
-require_once __DIR__ . '/../includes/errors/payment-button-error-code.php';
-
 class RZP_View_Button_SiteOrigin_Templates
 {
 
@@ -17,12 +9,13 @@ class RZP_View_Button_SiteOrigin_Templates
 
         $this->api = $this->razorpay->get_razorpay_api_instance();
     }
+
 	/**
      * Generates admin page options using Settings API
     **/
 	function razorpay_view_button()
     {
-        if(empty(sanitize_text_field($_REQUEST['btn'])) || null == (sanitize_text_field($_REQUEST['btn']))) 
+        if(empty(sanitize_text_field($_REQUEST['btn'])) || null == (sanitize_text_field($_REQUEST['btn'])))
         {
             wp_die("This page consist some request parameters to view response");
         }
@@ -34,7 +27,7 @@ class RZP_View_Button_SiteOrigin_Templates
             $previous_page_url = admin_url('admin.php?page=razorpay_subscription_button_siteorigin&paged='.$pagenum);
         }
         $button_detail = $this->fetch_button_detail(sanitize_text_field($_REQUEST['btn']));
-        
+
         $show = "jQuery('.overlay').show()";
         $hide = "jQuery('.overlay').hide()";
         echo '<div class="wrap">
@@ -80,7 +73,7 @@ class RZP_View_Button_SiteOrigin_Templates
                   
         </div>';
 
-        $modal = '<div class="overlay"><div class="modal">
+        $modal = '<div class="overlay"><div class="status-modal">
   <form class="modal-content" action="'.esc_url( admin_url('admin-post.php') ).'" method="POST">
     <div class="container">
         <div class="modal-header">
@@ -94,6 +87,7 @@ class RZP_View_Button_SiteOrigin_Templates
                 <button type="button" onclick="'.$hide.'" class="btn btn-default">No, don`t!</button>
                 <button type="submit" onclick="'.$hide.'" name="btn_action" value="'.$button_detail['btn_pointer_status'].'" class="btn btn-primary">Yes, '.$button_detail['btn_pointer_status'].'</button>
                 <input type="hidden" name="btn_id" value="'.$button_detail['id'].'">
+                <input type="hidden" name="type" value="'.$type.'">
                 <input type="hidden" name="paged" value="'.$pagenum.'">
                 <input type="hidden" name="action" value="rzp_btn_siteorigin_action">
             </div>

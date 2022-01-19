@@ -15,7 +15,6 @@ require_once __DIR__.'/includes/rzp-btn-settings.php';
 require_once __DIR__.'/includes/rzp-payment-buttons.php';
 require_once __DIR__.'/includes/rzp-subscription-buttons.php';
 
-
 use Razorpay\Api\Api;
 use Razorpay\Api\Errors;
 
@@ -36,8 +35,6 @@ function bootstrap_scripts_enqueue_siteorigin()
 
 /**
  * This is the RZP Payment button loader class.
- *
- * @package RZP WP List Table
  */
 if (!class_exists('RZP_Payment_Button_SiteOrigin_Loader'))
 {
@@ -93,7 +90,6 @@ if (!class_exists('RZP_Payment_Button_SiteOrigin_Loader'))
                 'Subscription Buttons', 'administrator','rzp_button_view_siteorigin',array( $this, 'rzp_button_view_siteorigin' ));
         }
 
-
         /**
          * Initialize razorpay api instance
         **/
@@ -113,8 +109,6 @@ if (!class_exists('RZP_Payment_Button_SiteOrigin_Loader'))
                      </div>');
         }
 
-
-
 		/**
          * Creating the settings link from the plug ins page
         **/
@@ -122,7 +116,7 @@ if (!class_exists('RZP_Payment_Button_SiteOrigin_Loader'))
         {
             $pluginLinks = array(
                             'settings' => '<a href="'. esc_url(admin_url('admin.php?page=razorpay_siteorigin_settings')) .'">Settings</a>',
-                            'docs'     => '<a href="">Docs</a>',
+                            'docs'     => '<a href="https://razorpay.com/docs/payment-button/supported-platforms/wordpress/elementor/">Docs</a>',
                             'support'  => '<a href="https://razorpay.com/contact/">Support</a>'
                         );
 
@@ -144,7 +138,6 @@ if (!class_exists('RZP_Payment_Button_SiteOrigin_Loader'))
         /**
          * Razorpay Subscription Button Page
          */
-
         public function rzp_subscription_buttons_page()
         {
             $rzp_subscription_buttons = new RZP_Subscription_Buttons_SiteOrigin();
@@ -188,7 +181,7 @@ function razorpay_payment_button_siteorigin_action()
     $btn_action->process();
 }
 
-//$is_enable = get_option('');
+//$is_enable = get_option('phoen_awesome_wid_enable');
 
 //if($is_enable == 1){
 
@@ -197,6 +190,9 @@ function razorpay_payment_button_siteorigin_action()
 
 //}
 
+/**
+ * Razorpay widgets tab for siteorigin editor
+ */
 function add_razorpay_widget_tabs($tabs) {
     $tabs[] = array(
         'title' => __('Razorpay Widgets', 'razorpay'),

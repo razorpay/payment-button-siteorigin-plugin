@@ -1,11 +1,5 @@
 <?php
 
-require_once __DIR__.'/../razorpay-payment-buttons.php';
-require_once __DIR__.'/../razorpay-sdk/Razorpay.php';
-
-use Razorpay\Api\Api;
-use Razorpay\Api\Errors;
-
 if( ! class_exists( 'WP_List_Table' ) ) {
     require_once( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' );
 }
@@ -38,8 +32,7 @@ class RZP_Subscription_Buttons_SiteOrigin extends WP_List_Table {
         echo '<form method="post">
             <input type="hidden" name="page" value="">';
         
-        // $this->search_box( 'search', 'search_id' );
-        $this->display();  
+        $this->display();
         
         echo '</form></div>
             </div>';
@@ -94,12 +87,12 @@ class RZP_Subscription_Buttons_SiteOrigin extends WP_List_Table {
         $all_url = remove_query_arg('status');
         $views['all'] = "<a href='{$all_url }' {$class} >All</a>";
 
-        //Recovered link
+        //Active buttons
         $foo_url = add_query_arg('status','active');
         $class = ($current == 'active' ? ' class="current"' :'');
         $views['status'] = "<a href='{$foo_url}' {$class} >Enabled</a>";
 
-        //Abandon
+        //Inactive buttons
         $bar_url = add_query_arg('status','inactive');
         $class = ($current == 'inactive' ? ' class="current"' :'');
         $views['disabled'] = "<a href='{$bar_url}' {$class} >Disabled</a>";
@@ -107,9 +100,7 @@ class RZP_Subscription_Buttons_SiteOrigin extends WP_List_Table {
         return $views;
                 
     }
-        
-        
-        
+
     function usort_reorder( $a, $b ) 
     {
         if(isset($_GET['orderby']) && isset($_GET['order']))
@@ -168,13 +159,13 @@ class RZP_Subscription_Buttons_SiteOrigin extends WP_List_Table {
         $payment_page = $this->get_items($customvar, $per_page);
         
         $count = count($payment_page);
+        $payment_pages = array();
+
         for($i=0;$i<$count;$i++){
             
             if($i >= $offset && $i < $offset+$per_page){
                 $payment_pages[]=$payment_page[$i];
             }
-
-            
             
         }
 
@@ -184,7 +175,6 @@ class RZP_Subscription_Buttons_SiteOrigin extends WP_List_Table {
         $this->_column_headers = array($columns, $hidden, $sortable);   
         usort( $payment_pages, array( &$this, 'usort_reorder' ) );
 
-       
         $this->items = $payment_pages;
 
         // Set the pagination
@@ -221,10 +211,10 @@ class RZP_Subscription_Buttons_SiteOrigin extends WP_List_Table {
             {
               $items[] = array(
                 'id' => $button['id'],
-                'title' => $button['title'],
+                'title' => ucfirst($button['title']),
                 'total_sales' => $button['payment_page_items'][0]['quantity_sold'],
-                'created_at' => date("d F Y H:i A", $button['created_at']),
-                'status' => $button['status'],
+                'created_at' => date("d M Y H:i A", $button['created_at']),
+                'status' => ucfirst($button['status']),
               );
             }
           }

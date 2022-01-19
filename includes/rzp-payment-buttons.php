@@ -1,11 +1,5 @@
 <?php
 
-require_once __DIR__.'/../razorpay-payment-buttons.php';
-require_once __DIR__.'/../razorpay-sdk/Razorpay.php';
-
-use Razorpay\Api\Api;
-use Razorpay\Api\Errors;
-
 if( ! class_exists( 'WP_List_Table' ) ) {
 	require_once( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' );
 }
@@ -37,9 +31,8 @@ class RZP_Payment_Buttons_SiteOrigin extends WP_List_Table {
 
 		echo '<form method="post">
             <input type="hidden" name="page" value="">';
-		
-        // $this->search_box( 'search', 'search_id' );
-		$this->display();  
+
+		$this->display();
 		
         echo '</form></div>
             </div>';
@@ -94,12 +87,12 @@ class RZP_Payment_Buttons_SiteOrigin extends WP_List_Table {
         $all_url = remove_query_arg('status');
         $views['all'] = "<a href='{$all_url }' {$class} >All</a>";
 
-        //Recovered link
+        //Active buttons
         $foo_url = add_query_arg('status','active');
         $class = ($current == 'active' ? ' class="current"' :'');
         $views['status'] = "<a href='{$foo_url}' {$class} >Enabled</a>";
 
-        //Abandon
+        //Inactive buttons
         $bar_url = add_query_arg('status','inactive');
         $class = ($current == 'inactive' ? ' class="current"' :'');
         $views['disabled'] = "<a href='{$bar_url}' {$class} >Disabled</a>";
@@ -138,7 +131,7 @@ class RZP_Payment_Buttons_SiteOrigin extends WP_List_Table {
     {
         $paged = isset(($_REQUEST['paged'])) ? $_REQUEST['paged']:1;
         $actions = array(
-            'view'      => sprintf('<a href="?page=%s&btn=%s&paged=%s">View</a>','rzp_button_view_siteorigin', $item['id'], $paged ),
+            'view'      => sprintf('<a href="?page=%s&btn=%s&type=%s&paged=%s">View</a>','rzp_button_view_siteorigin', $item['id'], 'payment', $paged ),
         );
 
         return sprintf('%1$s %2$s', $item['title'], $this->row_actions($actions, $always_visible = true ) );
@@ -175,8 +168,6 @@ class RZP_Payment_Buttons_SiteOrigin extends WP_List_Table {
             if($i >= $offset && $i < $offset+$per_page){
                 $payment_pages[]=$payment_page[$i];
             }
-
-            
             
         }
 
@@ -222,15 +213,14 @@ class RZP_Payment_Buttons_SiteOrigin extends WP_List_Table {
             {
                 $items[] = array(
                     'id' => $button['id'],
-                    'title' => $button['title'],
+                    'title' => ucfirst($button['title']),
                     'total_sales' => $button['payment_page_items'][0]['quantity_sold'],
-                    'status' => $button['status'],
+                    'status' => ucfirst($button['status']),
                     'created_at' => date("d M Y H:i A", $button['created_at']),
                 );
             }
           }
         return $items;
     }
-		
 
 }

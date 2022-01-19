@@ -4,8 +4,6 @@ use Razorpay\Api\Api;
 use Razorpay\Api\Errors;
 use Razorpay\PaymentButtonSiteOrigin\Errors as BtnErrors;
 
-require_once __DIR__ . '/../includes/rzp-payment-buttons.php';
-
 class RZP_Button_Action_SiteOrigin
 {
     public function __construct()
@@ -23,7 +21,8 @@ class RZP_Button_Action_SiteOrigin
         $btn_id = sanitize_text_field($_POST['btn_id']);
         $action = sanitize_text_field($_POST['btn_action']);
         $paged = sanitize_text_field($_POST['paged']);
-        $page_url = admin_url( 'admin.php?page=rzp_button_view_siteorigin&btn='.$btn_id .'&paged='.$paged);
+        $type = sanitize_text_field($_POST['type']);
+        $page_url = admin_url( 'admin.php?page=rzp_button_view_siteorigin&btn='.$btn_id .'&type='.$type.'&paged='.$paged);
 
         try
         {
