@@ -20,18 +20,15 @@ class rzp_payment_button_widget extends WP_Widget
     /**
      * Widget Backend
      */
-    public function form( $instance )
+    public function form($instance)
     {
-        if ( isset( $instance[ 'payment_button_id' ] ) ) {
+        if (isset($instance['payment_button_id'])) {
             $payment_button = $instance[ 'payment_button_id' ];
-        }
-        else
-        {
+        } else {
             $payment_button ='';
         }
 
         // Widget admin form
-
         $buttons = $this->get_payment_buttons();
         ?>
 
@@ -49,7 +46,6 @@ class rzp_payment_button_widget extends WP_Widget
                             echo 'selected';
                         } ?>><?php echo $item['title']; ?></option>
                         <?php
-
                     }
                 }
                 ?>
@@ -70,7 +66,7 @@ class rzp_payment_button_widget extends WP_Widget
 
         try
         {
-           return $items = $api->paymentPage->all(['view_type' => 'button', "status" => 'active','count'=> 100]);
+           return $items = $api->paymentPage->all(['view_type' => 'button', "status" => 'active', 'count'=> 100]);
         }
         catch (\Exception $e)
         {
@@ -80,7 +76,6 @@ class rzp_payment_button_widget extends WP_Widget
                 <p>RAZORPAY ERROR: Payment button fetch failed with the following message: '.$message.'</p>
              </div>');
         }
-
     }
 
     /** Creating widget front-end
@@ -90,36 +85,31 @@ class rzp_payment_button_widget extends WP_Widget
     {
         if ($instance['payment_button_id']) {
             $payment_button = $instance['payment_button_id'];
-        } else {
-            $payment_button = "";
+
+            if (!function_exists('get_plugin_data')) {
+                require_once(ABSPATH . 'wp-admin/includes/plugin.php');
+            }
+
+            $mod_version = get_plugin_data(plugin_dir_path(__DIR__) . '../razorpay-payment-buttons.php')['Version'];
+
+            $dataPlugin = "wordpress-payment-button-siteorigin-" . $mod_version;
+            ?>
+            <form>
+                <script src="https://cdn.razorpay.com/static/widget/payment-button.js"
+                        data-plugin="<?php esc_attr_e($dataPlugin) ?>"
+                        data-payment_button_id="<?php esc_attr_e(!empty($payment_button) ? $payment_button : ''); ?>"></script>
+            </form>
+
+            <?php
         }
-
-        if (!function_exists('get_plugin_data')) {
-            require_once(ABSPATH . 'wp-admin/includes/plugin.php');
-        }
-
-        $mod_version = get_plugin_data(plugin_dir_path(__DIR__) . '../razorpay-payment-buttons.php')['Version'];
-
-        $dataPlugin = "wordpress-payment-button-siteorigin-" . $mod_version;
-        ?>
-        <form>
-            <script src="https://cdn.razorpay.com/static/widget/payment-button.js"
-                    data-plugin="<?php esc_attr_e($dataPlugin) ?>"
-                    data-payment_button_id="<?php esc_attr_e(!empty($payment_button) ? $payment_button : ''); ?>"></script>
-        </form>
-
-        <?php
     }
-
 }
 
 /**
  * Register and load the widget
  */
 function rzp_payment_button_load_widget() {
-
-    register_widget( 'rzp_payment_button_widget' );
-
+    register_widget('rzp_payment_button_widget');
 }
 
-add_action( 'widgets_init', 'rzp_payment_button_load_widget' );
+add_action('widgets_init', 'rzp_payment_button_load_widget');

@@ -20,10 +20,10 @@ class rzp_subscription_button_widget extends WP_Widget
     /**
      * Widget Backend
      */
-    public function form( $instance )
+    public function form($instance)
     {
-        if ( isset( $instance[ 'subscription_button_id' ] ) ) {
-            $subscription_button = $instance[ 'subscription_button_id' ];
+        if (isset($instance['subscription_button_id'])) {
+            $subscription_button = $instance['subscription_button_id'];
         }
         else
         {
@@ -31,31 +31,27 @@ class rzp_subscription_button_widget extends WP_Widget
         }
 
         // Widget admin form
-
         $buttons = $this->get_subscription_buttons();
-
         ?>
 
         <p class="default-form">
-            <label for="<?php echo $this->get_field_id( 'subscription_button_id' ); ?>"><?php _e( 'Subscription Button:' ); ?></label>
-            <select class="widefat product_category" name="<?php echo $this->get_field_name( 'subscription_button_id' ); ?>" id="<?php echo $this->get_field_id( 'subscription_button_id' ); ?>">
+            <label for="<?php echo $this->get_field_id('subscription_button_id'); ?>"><?php _e('Subscription Button:'); ?></label>
+            <select class="widefat product_category" name="<?php echo $this->get_field_name('subscription_button_id'); ?>" id="<?php echo $this->get_field_id('subscription_button_id'); ?>">
 
                 <option value="">select</option>
                 <?php
                 if ($buttons)
                 {
-                    foreach($buttons['items'] as $item)
+                    foreach ($buttons['items'] as $item)
                     {
                         ?>
                         <option value="<?php echo $item['id']; ?>" <?php if($subscription_button==$item['title']){echo 'selected';}?>><?php echo $item['title']; ?></option>
                         <?php
-
                     }
                 }
                 ?>
             </select>
         </p>
-
         <?php
     }
 
@@ -80,7 +76,6 @@ class rzp_subscription_button_widget extends WP_Widget
                 <p>RAZORPAY ERROR: Subscription button fetch failed with the following message: '.$message.'</p>
              </div>');
         }
-
     }
 
     /** Creating widget front-end
@@ -90,36 +85,31 @@ class rzp_subscription_button_widget extends WP_Widget
     {
         if ($instance['subscription_button_id']) {
             $subscription_button = $instance['subscription_button_id'];
-        } else {
-            $subscription_button = "";
+
+            if (!function_exists('get_plugin_data')) {
+                require_once(ABSPATH . 'wp-admin/includes/plugin.php');
+            }
+
+            $mod_version = get_plugin_data(plugin_dir_path(__DIR__) . '../razorpay-payment-buttons.php')['Version'];
+
+            $dataPlugin = "wordpress-subscription-button-siteorigin-" . $mod_version;
+            ?>
+            <form>
+                <script src="https://cdn.razorpay.com/static/widget/subscription-button.js"
+                        data-plugin="<?php esc_attr_e($dataPlugin) ?>"
+                        data-subscription_button_id="<?php esc_attr_e(!empty($subscription_button) ? $subscription_button : ''); ?>"></script>
+            </form>
+
+            <?php
         }
-
-        if (!function_exists('get_plugin_data')) {
-            require_once(ABSPATH . 'wp-admin/includes/plugin.php');
-        }
-
-        $mod_version = get_plugin_data(plugin_dir_path(__DIR__) . '../razorpay-payment-buttons.php')['Version'];
-
-        $dataPlugin = "wordpress-subscription-button-siteorigin-" . $mod_version;
-        ?>
-        <form>
-            <script src="https://cdn.razorpay.com/static/widget/subscription-button.js"
-                    data-plugin="<?php esc_attr_e($dataPlugin) ?>"
-                    data-subscription_button_id="<?php esc_attr_e(!empty($subscription_button) ? $subscription_button : ''); ?>"></script>
-        </form>
-
-        <?php
     }
-
 }
 
 /**
  * Register and load the widget
  */
 function rzp_subscription_button_load_widget() {
-
-    register_widget( 'rzp_subscription_button_widget' );
-
+    register_widget('rzp_subscription_button_widget');
 }
 
-add_action( 'widgets_init', 'rzp_subscription_button_load_widget' );
+add_action('widgets_init', 'rzp_subscription_button_load_widget');

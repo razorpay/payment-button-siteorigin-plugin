@@ -1,6 +1,5 @@
 <?php
-
-if( ! class_exists( 'WP_List_Table' ) ) {
+if (! class_exists('WP_List_Table')) {
 	require_once( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' );
 }
 
@@ -17,33 +16,36 @@ class RZP_Payment_Buttons_SiteOrigin extends WP_List_Table {
         );
 	}
 
-	function rzp_buttons() 
+    /**
+     * Prepares buttons table and display
+     */
+    function rzp_buttons()
     {
-		echo '<div>
-            <div class="wrap"><h2>Razorpay Buttons</h2>'; 
+        echo '<div>
+            <div class="wrap"><h2>Razorpay Buttons</h2>';
 
-            $this->prepare_items();
-		
+        $this->prepare_items();
+
         echo '<input type="hidden" name="page" value="" />
             <input type="hidden" name="section" value="issues" />';
 
-            $this->views();
+        $this->views();
 
-		echo '<form method="post">
+        echo '<form method="post">
             <input type="hidden" name="page" value="">';
 
-		$this->display();
-		
+        $this->display();
+
         echo '</form></div>
             </div>';
-	}
+    }
 
 	/**
 	 * Add columns to grid view
+     * @return array
 	 */
 	function get_columns() 
     {
-
         $columns = array(
             'title'=>__('Title'),
             'total_sales'=>__('Total Sales'),
@@ -52,9 +54,14 @@ class RZP_Payment_Buttons_SiteOrigin extends WP_List_Table {
         );
 
 		return $columns;
-	}	
+	}
 
-	function column_default( $item, $column_name ) 
+    /**
+     * @param array|object $item
+     * @param string $column_name
+     * @return mixed|string|true|void
+     */
+	function column_default($item, $column_name)
     {
 		switch($column_name) 
         {
@@ -67,17 +74,20 @@ class RZP_Payment_Buttons_SiteOrigin extends WP_List_Table {
 
             default:
 		  
-            return print_r( $item, true ) ; //Show the whole array for troubleshooting purposes
+            return print_r($item, true) ; //Show the whole array for troubleshooting purposes
 		}
-	}		
-		
+	}
+
+    /**
+     * @return array
+     */
     protected function get_views() 
     { 
         $current = 'all';
         
         if(isset($_REQUEST['status']))
         {
-            $current = ( !empty(sanitize_text_field($_REQUEST['status'])) ? sanitize_text_field($_REQUEST['status']) : 'all');
+            $current = (!empty(sanitize_text_field($_REQUEST['status'])) ? sanitize_text_field($_REQUEST['status']) : 'all');
         }
 
         $views = array();
@@ -98,27 +108,30 @@ class RZP_Payment_Buttons_SiteOrigin extends WP_List_Table {
         $views['disabled'] = "<a href='{$bar_url}' {$class} >Disabled</a>";
 
         return $views;
-                
 	}
-		
-		
-		
-    function usort_reorder( $a, $b ) 
+
+    /**
+     * @param $a
+     * @param $b
+     * @return int
+     */
+    function usort_reorder($a, $b)
     {
-        if(isset($_GET['orderby']) && isset($_GET['order']))
-        {
+        if (isset($_GET['orderby']) && isset($_GET['order'])) {
             // If no sort, default to title
-            $orderby = ( ! empty(sanitize_text_field($_GET['orderby'])) ) ? sanitize_text_field($_GET['orderby']) : 'title';
+            $orderby = (!empty(sanitize_text_field($_GET['orderby']))) ? sanitize_text_field($_GET['orderby']) : 'title';
             // If no order, default to asc
-            $order = ( ! empty(sanitize_text_field($_GET['order'] ) ) ) ? sanitize_text_field($_GET['order']) : 'desc';
+            $order = (!empty(sanitize_text_field($_GET['order']))) ? sanitize_text_field($_GET['order']) : 'desc';
             // Determine sort order
-            $result = strcmp( $a[$orderby], $b[$orderby] );
+            $result = strcmp($a[$orderby], $b[$orderby]);
             // Send final sort direction to usort
-            return ( $order === 'asc' ) ? $result : -$result;
+            return ($order === 'asc') ? $result : -$result;
         }
-        
     }
-		
+
+    /**
+     * @return array|array[]
+     */
     function get_sortable_columns() 
     {
         $sortable_columns = array(
@@ -127,14 +140,18 @@ class RZP_Payment_Buttons_SiteOrigin extends WP_List_Table {
         return $sortable_columns;
     }
 
+    /**
+     * @param $item
+     * @return string
+     */
     function column_title($item) 
     {
         $paged = isset(($_REQUEST['paged'])) ? $_REQUEST['paged']:1;
         $actions = array(
-            'view'      => sprintf('<a href="?page=%s&btn=%s&type=%s&paged=%s">View</a>','rzp_button_view_siteorigin', $item['id'], 'payment', $paged ),
+            'view'      => sprintf('<a href="?page=%s&btn=%s&type=%s&paged=%s">View</a>','rzp_button_view_siteorigin', $item['id'], 'payment', $paged),
         );
 
-        return sprintf('%1$s %2$s', $item['title'], $this->row_actions($actions, $always_visible = true ) );
+        return sprintf('%1$s %2$s', $item['title'], $this->row_actions($actions, $always_visible = true));
     }
 
     /**
@@ -142,13 +159,12 @@ class RZP_Payment_Buttons_SiteOrigin extends WP_List_Table {
     */	
     function prepare_items() 
     {
-
         $per_page = 10;
         $current_page = $this->get_pagenum();
 
         if (1 < $current_page) 
         {
-        	$offset = $per_page * ( $current_page - 1 );
+        	$offset = $per_page * ($current_page - 1);
         } 
         else 
         {
@@ -156,7 +172,7 @@ class RZP_Payment_Buttons_SiteOrigin extends WP_List_Table {
         }
 
         //Retrieve $customvar for use in query to get items.
-        $customvar = ( isset(($_REQUEST['status'])) ? sanitize_text_field($_REQUEST['status']) : '');
+        $customvar = (isset(($_REQUEST['status'])) ? sanitize_text_field($_REQUEST['status']) : '');
 
         $payment_page = $this->get_items($customvar, $per_page);
 
@@ -175,18 +191,23 @@ class RZP_Payment_Buttons_SiteOrigin extends WP_List_Table {
         $hidden = array();
         $sortable = $this->get_sortable_columns();
         $this->_column_headers = array($columns, $hidden, $sortable);	
-        usort( $payment_pages, array( &$this, 'usort_reorder' ) );
+        usort($payment_pages, array(&$this, 'usort_reorder'));
 
         $this->items = $payment_pages;
 
         // Set the pagination
-        $this->set_pagination_args( array(
+        $this->set_pagination_args(array(
         	'total_items' => $count,
         	'per_page'    => $per_page,
-        	'total_pages' => ceil( $count / $per_page )
+        	'total_pages' => ceil($count / $per_page)
         ) );
     }
 
+    /**
+     * @param $status
+     * @param $count
+     * @return array
+     */
     function get_items($status, $count)
     {
         $items = array();
@@ -197,7 +218,7 @@ class RZP_Payment_Buttons_SiteOrigin extends WP_List_Table {
 
         try
         {
-            $buttons = $api->paymentPage->all(['view_type' => 'button', "status" => $status,'count'=> 100]);
+            $buttons = $api->paymentPage->all(['view_type' => 'button', "status" => $status, 'count'=> 100]);
         }
         catch (Exception $e)
         {
@@ -222,5 +243,4 @@ class RZP_Payment_Buttons_SiteOrigin extends WP_List_Table {
           }
         return $items;
     }
-
 }

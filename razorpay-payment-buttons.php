@@ -48,7 +48,7 @@ if (!class_exists('RZP_Payment_Button_SiteOrigin_Loader'))
     if (!defined('RZP_REDIRECT_URL'))
     {
         // admin-post.php is a file that contains methods for us to process HTTP requests
-        define('RZP_REDIRECT_URL', esc_url( admin_url('admin-post.php')));
+        define('RZP_REDIRECT_URL', esc_url(admin_url('admin-post.php')));
     }
 
 	class RZP_Payment_Button_SiteOrigin_Loader {
@@ -57,7 +57,7 @@ if (!class_exists('RZP_Payment_Button_SiteOrigin_Loader'))
 		 */
 		public function __construct()
 		{
-			add_action('admin_menu', array( $this, 'rzp_add_plugin_page'));
+		    add_action('admin_menu', array($this, 'rzp_add_plugin_page'));
 
 			add_filter('plugin_action_links_' . RZP_PAYMENT_SITEORIGIN_BASE_NAME, array($this, 'razorpay_plugin_links'));
 
@@ -71,23 +71,23 @@ if (!class_exists('RZP_Payment_Button_SiteOrigin_Loader'))
         public function rzp_add_plugin_page()
         {
             /* add pages & menu items */
-            add_menu_page( esc_attr__( 'Razorpay Payment Button', 'textdomain' ), esc_html__( 'Razorpay Buttons SiteOrigin', 'textdomain' ),
-            'administrator','razorpay_button_siteorigin',array( $this, 'rzp_view_buttons_page' ), '', 10);
+            add_menu_page(esc_attr__('Razorpay Payment Button', 'textdomain'), esc_html__('Razorpay Buttons SiteOrigin', 'textdomain'),
+            'administrator','razorpay_button_siteorigin',array($this, 'rzp_view_buttons_page'), '', 10);
 
-            add_submenu_page( esc_attr__( 'razorpay_button_siteorigin', 'textdomain' ), esc_html__( 'Payment Buttons', 'textdomain' ),
-                'Payment Buttons', 'administrator','razorpay_button_siteorigin', array( $this, 'rzp_view_buttons_page' ),0);
+            add_submenu_page(esc_attr__('razorpay_button_siteorigin', 'textdomain'), esc_html__('Payment Buttons', 'textdomain'),
+                'Payment Buttons', 'administrator','razorpay_button_siteorigin', array($this, 'rzp_view_buttons_page'),0);
 
-            add_submenu_page( esc_attr__( 'razorpay_button_siteorigin', 'textdomain' ), esc_html__( 'Razorpay Settings', 'textdomain' ),
-            'Settings', 'administrator','razorpay_siteorigin_settings', array( $this, 'razorpay_siteorigin_settings' ));
+            add_submenu_page(esc_attr__('razorpay_button_siteorigin', 'textdomain'), esc_html__('Razorpay Settings', 'textdomain'),
+            'Settings', 'administrator','razorpay_siteorigin_settings', array($this, 'razorpay_siteorigin_settings'));
 
-            add_submenu_page( esc_attr__( '', 'textdomain' ), esc_html__( 'Razorpay Buttons SiteOrigin', 'textdomain' ),
-            'Payment Buttons', 'administrator','rzp_button_view_siteorigin', array( $this, 'rzp_button_view_siteorigin' ));
+            add_submenu_page(esc_attr__('', 'textdomain'), esc_html__('Razorpay Buttons SiteOrigin', 'textdomain'),
+            'Payment Buttons', 'administrator','rzp_button_view_siteorigin', array($this, 'rzp_button_view_siteorigin'));
 
-            add_submenu_page( esc_attr__( 'razorpay_button_siteorigin', 'textdomain' ), esc_html__( 'Razorpay Subscription Buttons', 'textdomain' ),
-                'Subscription Buttons', 'administrator','razorpay_subscription_button_siteorigin', array( $this, 'rzp_subscription_buttons_page' ),1);
+            add_submenu_page(esc_attr__('razorpay_button_siteorigin', 'textdomain'), esc_html__('Razorpay Subscription Buttons', 'textdomain'),
+                'Subscription Buttons', 'administrator','razorpay_subscription_button_siteorigin', array($this, 'rzp_subscription_buttons_page'),1);
 
-            add_submenu_page( esc_attr__( '', 'textdomain' ), esc_html__( 'Razorpay Subscription Button', 'textdomain' ),
-                'Subscription Buttons', 'administrator','rzp_button_view_siteorigin',array( $this, 'rzp_button_view_siteorigin' ));
+            add_submenu_page(esc_attr__('', 'textdomain'), esc_html__('Razorpay Subscription Button', 'textdomain'),
+                'Subscription Buttons', 'administrator','rzp_button_view_siteorigin',array($this, 'rzp_button_view_siteorigin'));
         }
 
         /**
@@ -99,7 +99,7 @@ if (!class_exists('RZP_Payment_Button_SiteOrigin_Loader'))
 
             $secret = get_option('key_secret_field');
 
-            if(empty($key) === false && empty($secret) === false)
+            if (empty($key) === false && empty($secret) === false)
             {
                 return new Api($key, $secret);
             }
@@ -116,7 +116,6 @@ if (!class_exists('RZP_Payment_Button_SiteOrigin_Loader'))
         {
             $pluginLinks = array(
                             'settings' => '<a href="'. esc_url(admin_url('admin.php?page=razorpay_siteorigin_settings')) .'">Settings</a>',
-                            'docs'     => '<a href="https://razorpay.com/docs/payment-button/supported-platforms/wordpress/elementor/">Docs</a>',
                             'support'  => '<a href="https://razorpay.com/contact/">Support</a>'
                         );
 
@@ -162,9 +161,7 @@ if (!class_exists('RZP_Payment_Button_SiteOrigin_Loader'))
 
             $new_button->razorpay_view_button();
         }
-
 	}
-
 }
 
 /**
@@ -181,14 +178,8 @@ function razorpay_payment_button_siteorigin_action()
     $btn_action->process();
 }
 
-//$is_enable = get_option('phoen_awesome_wid_enable');
-
-//if($is_enable == 1){
-
-    include_once(__DIR__.'/widgets/payment_button/payment_button.php');
-    include_once(__DIR__.'/widgets/subscription_button/subscription_button.php');
-
-//}
+include_once(__DIR__.'/widgets/payment_button/payment_button.php');
+include_once(__DIR__.'/widgets/subscription_button/subscription_button.php');
 
 /**
  * Razorpay widgets tab for siteorigin editor

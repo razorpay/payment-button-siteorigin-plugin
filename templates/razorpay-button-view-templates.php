@@ -1,11 +1,10 @@
 <?php
-
 class RZP_View_Button_SiteOrigin_Templates
 {
 
     public function __construct()
     {
-        $this->razorpay = new RZP_Payment_Button_SiteOrigin_Loader(false);
+        $this->razorpay = new RZP_Payment_Button_SiteOrigin_Loader();
 
         $this->api = $this->razorpay->get_razorpay_api_instance();
     }
@@ -74,7 +73,7 @@ class RZP_View_Button_SiteOrigin_Templates
         </div>';
 
         $modal = '<div class="overlay"><div class="status-modal">
-  <form class="modal-content" action="'.esc_url( admin_url('admin-post.php') ).'" method="POST">
+  <form class="modal-content" action="'.esc_url(admin_url('admin-post.php')).'" method="POST">
     <div class="container">
         <div class="modal-header">
             <h3 class="modal-title">'.$button_detail["modal_title_content"].'</h3>
@@ -108,6 +107,11 @@ class RZP_View_Button_SiteOrigin_Templates
 echo $modal;
     }
 
+    /**
+     * @param $btn_id
+     * @return array
+     * @throws Exception
+     */
     public function fetch_button_detail($btn_id) 
     {
         try
@@ -170,5 +174,4 @@ echo $modal;
             'created_at' => date("d F Y", $button_detail['created_at']),
         );
     }
-
 }
