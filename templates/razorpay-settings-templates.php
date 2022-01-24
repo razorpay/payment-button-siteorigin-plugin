@@ -1,5 +1,4 @@
 <?php
-
 class RZP_Payment_Button_SiteOrigin_Templates
 {
 	/**

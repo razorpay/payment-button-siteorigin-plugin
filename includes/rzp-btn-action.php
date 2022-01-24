@@ -1,29 +1,30 @@
 <?php
-
 use Razorpay\Api\Api;
 use Razorpay\Api\Errors;
 use Razorpay\PaymentButtonSiteOrigin\Errors as BtnErrors;
 
-require_once __DIR__ . '/../includes/rzp-payment-buttons.php';
-
+/**
+ * Class RZP_Button_Action_SiteOrigin
+ */
 class RZP_Button_Action_SiteOrigin
 {
     public function __construct()
     {
-        $this->razorpay = new RZP_Payment_Button_SiteOrigin_Loader(false);
+        $this->razorpay = new RZP_Payment_Button_SiteOrigin_Loader();
 
         $this->api = $this->razorpay->get_razorpay_api_instance();
     }
 
     /**
-     * Generates admin page options using Settings API
+     * Updates the button status
     **/
-    function process() 
+    function process()
     {
         $btn_id = sanitize_text_field($_POST['btn_id']);
         $action = sanitize_text_field($_POST['btn_action']);
         $paged = sanitize_text_field($_POST['paged']);
-        $page_url = admin_url( 'admin.php?page=rzp_button_view_siteorigin&btn='.$btn_id .'&paged='.$paged);
+        $type = sanitize_text_field($_POST['type']);
+        $page_url = admin_url('admin.php?page=rzp_button_view_siteorigin&btn=' . $btn_id . '&type=' . $type . '&paged=' . $paged);
 
         try
         {
@@ -39,6 +40,6 @@ class RZP_Button_Action_SiteOrigin
                 400
             );
         }
-        wp_redirect( $page_url );
+        wp_redirect($page_url);
     }
 }
