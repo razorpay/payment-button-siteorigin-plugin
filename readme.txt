@@ -1,5 +1,5 @@
 === Razorpay Payment Button SiteOrigin Plugin ===
-Contributors: razorpay
+Contributors: Razorpay
 Tags: Payment gateway, Donate button, UPI/credit/debit card, Payment plugin, India
 Tested up to: 5.8.3
 Stable tag: 1.0.0
