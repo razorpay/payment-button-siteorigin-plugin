@@ -91,7 +91,7 @@ Connect your WordPress website with your Razorpay account and you're all ready t
 
 = 1.0.0 =
 * Initial Changes
-* Tested upto WordPress 5.8.3
+* Tested upto WordPress 5.9
 
 == Frequently Asked Questions ==
 
