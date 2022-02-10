@@ -18,8 +18,8 @@ class RZP_View_Button_SiteOrigin_Templates
         {
             wp_die("This page consist some request parameters to view response");
         }
-        $pagenum=$_REQUEST['paged'];
-        $type = $_REQUEST['type'];
+        $pagenum = sanitize_text_field($_REQUEST['paged']);
+        $type = sanitize_text_field($_REQUEST['type']);
         if($type =='payment'){
             $previous_page_url = admin_url('admin.php?page=razorpay_button_siteorigin&paged='.$pagenum);
         }else{

@@ -1,7 +1,7 @@
 === Razorpay Payment Button SiteOrigin Plugin ===
 Contributors: Razorpay
 Tags: Payment gateway, Donate button, UPI/credit/debit card, Payment plugin, India
-Tested up to: 5.8.3
+Tested up to: 5.9
 Stable tag: 1.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -91,7 +91,7 @@ Connect your WordPress website with your Razorpay account and you're all ready t
 
 = 1.0.0 =
 * Initial Changes
-* Tested upto WordPress 5.8.3
+* Tested upto WordPress 5.9
 
 == Frequently Asked Questions ==
 
