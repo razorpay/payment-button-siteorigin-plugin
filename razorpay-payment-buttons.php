@@ -21,8 +21,11 @@ use Razorpay\Api\Errors;
 add_action('admin_enqueue_scripts', 'bootstrap_scripts_enqueue_siteorigin', 0);
 add_action('admin_post_rzp_btn_siteorigin_action', 'razorpay_payment_button_siteorigin_action', 0);
 
-function bootstrap_scripts_enqueue_siteorigin()
+function bootstrap_scripts_enqueue_siteorigin($hook_suffix)
 {
+    if ($hook_suffix != 'admin_page_rzp_button_view_siteorigin') {
+        return;
+    }
     wp_register_style('bootstrap-css-siteorigin', plugin_dir_url(__FILE__)  . 'public/css/bootstrap.min.css',
                 null, null);
     wp_register_style('button-css-siteorigin', plugin_dir_url(__FILE__)  . 'public/css/button.css',
