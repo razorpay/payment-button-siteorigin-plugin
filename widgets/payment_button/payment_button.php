@@ -95,9 +95,15 @@ class rzp_payment_button_widget extends WP_Widget
             $dataPlugin = "wordpress-payment-button-siteorigin-" . $mod_version;
             ?>
             <form>
-                <script src="https://cdn.razorpay.com/static/widget/payment-button.js"
-                        data-plugin="<?php esc_attr_e($dataPlugin) ?>"
-                        data-payment_button_id="<?php esc_attr_e(!empty($payment_button) ? $payment_button : ''); ?>"></script>
+                <?php
+                    wp_print_script_tag(
+                        array(
+                            'src' => esc_url('https://cdn.razorpay.com/static/widget/payment-button.js'),
+                            'data-plugin' => esc_attr($dataPlugin),
+                            'data-payment_button_id' => esc_attr(!empty($payment_button) ? $payment_button : ''),
+                        )
+                    );
+                ?>
             </form>
 
             <?php

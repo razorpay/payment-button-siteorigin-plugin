@@ -85,7 +85,20 @@ EOT;
 <label for ="title">This controls the title which the user sees during checkout.</label>
 EOT;
 
-        echo $title;
+        $allowed_tags = array(
+            'br' => array(),
+            'input' => array(
+                'type' => array(),
+                'name' => array(),
+                'id' => array(),
+                'size' => array(),
+                'value' => array(),
+            ),
+            'label' => array(
+                'for' => array()
+            ),
+        );
+        echo wp_kses($title, $allowed_tags);
     }
 
     /**
@@ -100,7 +113,20 @@ EOT;
 <label for ="description">This controls the display which the user sees during checkout.</label>
 EOT;
 
-        echo $description;
+        $allowed_tags = array(
+            'br' => array(),
+            'input' => array(
+                'type' => array(),
+                'name' => array(),
+                'id' => array(),
+                'size' => array(),
+                'value' => array(),
+            ),
+            'label' => array(
+                'for' => array()
+            ),
+        );
+        echo wp_kses($description, $allowed_tags);
     }
 
     /**
@@ -115,7 +141,20 @@ EOT;
 <label for ="key_id">The key Id and key secret can be generated from "API Keys" section of Razorpay Dashboard. Use test or live for test or live mode.</label>
 EOT;
 
-        echo $keyID;
+        $allowed_tags = array(
+            'br' => array(),
+            'input' => array(
+                'type' => array(),
+                'name' => array(),
+                'id' => array(),
+                'size' => array(),
+                'value' => array(),
+            ),
+            'label' => array(
+                'for' => array()
+            ),
+        );
+        echo wp_kses($keyID, $allowed_tags);
     }
 
     /**
@@ -130,7 +169,20 @@ EOT;
 <label for ="key_id">The key Id and key secret can be generated from "API Keys" section of Razorpay Dashboard. Use test or live for test or live mode.</label>
 EOT;
 
-        echo $keySecret;
+        $allowed_tags = array(
+            'br' => array(),
+            'input' => array(
+                'type' => array(),
+                'name' => array(),
+                'id' => array(),
+                'size' => array(),
+                'value' => array(),
+            ),
+            'label' => array(
+                'for' => array()
+            ),
+        );
+        echo wp_kses($keySecret, $allowed_tags);
     }
 
     /**
@@ -152,7 +204,22 @@ EOT;
 <label for ="payment_action">Payment action when order is compelete.</label>
 EOT;
 
-        echo $paymentAction;
+        $allowed_tags = array(
+            'br' => array(),
+            'select' => array(
+                'name' => array(),
+                'id' => array(),
+                'value' => array(),
+            ),
+            'option' => array(
+                'value' => array(),
+                'selected' => array()
+            ),
+            'label' => array(
+                'for' => array()
+            ),
+        );
+        echo wp_kses($paymentAction, $allowed_tags);
     }
 
     protected function get_settings()

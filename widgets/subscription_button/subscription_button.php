@@ -95,9 +95,14 @@ class rzp_subscription_button_widget extends WP_Widget
             $dataPlugin = "wordpress-subscription-button-siteorigin-" . $mod_version;
             ?>
             <form>
-                <script src="https://cdn.razorpay.com/static/widget/subscription-button.js"
-                        data-plugin="<?php esc_attr_e($dataPlugin) ?>"
-                        data-subscription_button_id="<?php esc_attr_e(!empty($subscription_button) ? $subscription_button : ''); ?>"></script>
+                <?php
+                wp_print_script_tag(
+                    array(
+                        'src' => esc_url('https://cdn.razorpay.com/static/widget/subscription-button.js'),
+                        'data-plugin' => esc_attr($dataPlugin),
+                        'data-subscription_button_id' => esc_attr(!empty($subscription_button) ? $subscription_button : ''),
+                    )
+                ); ?>
             </form>
 
             <?php
