@@ -1,8 +1,8 @@
 === Razorpay Payment Button SiteOrigin Plugin ===
 Contributors: Razorpay
 Tags: Payment gateway, Donate button, UPI/credit/debit card, Payment plugin, India
-Tested up to: 5.9
-Stable tag: 1.0.0
+Tested up to: 5.9.1
+Stable tag: 1.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -16,7 +16,8 @@ Start accepting payments on pages or blogs built on SiteOrigin. Offer credit/deb
 Razorpay Payment Button plugin for SiteOrigin on WordPress is a payment plugin that allows you to instantly add a payment checkout function on your SiteOrigin built website/blog. It requires zero coding and minimal technical expertise.
 
 With this plugin, you can place a Donate Now, Pay Now, Buy Now, or Subscribe Now button on your SiteOrigin built site/blog in less than 5 minutes.
-Set up one or multiple payment plans according to your business model. Offer your customers 100+ payment modes (UPI, NEFT, cards, wallets, and more) via a single WordPress & SiteOrigin payment plugin.
+
+Start accepting one time and recurring payments on your website. Set up one or multiple payment plans according to your business model. Offer your customers 100+ payment modes(UPI, NEFT, Cards, Wallets, and more)  via a single WordPress & SiteOrigin payment plugin
 
 It’s a free WordPress payment plugin that makes it easier to place the payment button widget anywhere on your website. It offers an integrated checkout experience that allows visitors to make payments directly on the same page without any redirections.
 
@@ -32,6 +33,7 @@ What can Razorpay Payment Button Plugin for SiteOrigin on WordPress do for you?
 - **Pre-made templates**: Add Donate Now, Buy Now, Support Now and more customizable buttons with pre-made templates to your website
 - **Checkout experience**: Build a seamless checkout experience for your customers with no redirections
 - **All-in-one plugin**: Let your customers pay the way they want with 100+ payment modes including credit/debit card, net-banking, UPI, wallets etc.
+- **Set payment plans your way**: Accept one-time and recurring payments on WordPress via a single WordPress payment plugin. Read more about Subscription Buttons [here](https://razorpay.com/docs/payments/payment-button/subscription-buttons/)
 - **International Payments**: Accept payments from more than 100 countries around the world
 - **Automated Receipts**: Send automated payment receipts and 80G receipts to your customers
 - **Powerful Dashboard**: Make data-driven business decisions using insights from reports available on our easy-to-understand dashboard
@@ -85,9 +87,14 @@ Connect your WordPress website with your Razorpay account and you're all ready t
 5. Modify the pricing fields as per your business and products. List multiple products, or allow customers to choose the amount they want to pay.
 6. Send automated payment receipts and 80G receipts to your customers.
 7. Accept International Payments in a go on your SiteOrigin built pages/blogs with WordPress
+8. Accept one time and recurring payments.
 
 
 == Changelog ==
+
+= 1.0.1 =
+* Update plugin description
+* Tested upto WordPress 5.9.1
 
 = 1.0.0 =
 * Initial Changes
