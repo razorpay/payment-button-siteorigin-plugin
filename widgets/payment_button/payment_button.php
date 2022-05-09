@@ -22,9 +22,12 @@ class rzp_payment_button_widget extends WP_Widget
      */
     public function form($instance)
     {
-        if (isset($instance['payment_button_id'])) {
+        if (isset($instance['payment_button_id']))
+        {
             $payment_button = $instance[ 'payment_button_id' ];
-        } else {
+        }
+        else
+        {
             $payment_button ='';
         }
 
@@ -39,8 +42,10 @@ class rzp_payment_button_widget extends WP_Widget
 
                 <option value="">select</option>
                 <?php
-                if ($buttons) {
-                    foreach ($buttons['items'] as $item) {
+                if ($buttons)
+                {
+                    foreach ($buttons['items'] as $item)
+                    {
                         ?>
                         <option value="<?php echo $item['id']; ?>" <?php if ($payment_button == $item['title']) {
                             echo 'selected';
@@ -83,10 +88,12 @@ class rzp_payment_button_widget extends WP_Widget
      */
     public function widget($args, $instance)
     {
-        if ($instance['payment_button_id']) {
+        if ($instance['payment_button_id'])
+        {
             $payment_button = $instance['payment_button_id'];
 
-            if (!function_exists('get_plugin_data')) {
+            if (!function_exists('get_plugin_data'))
+            {
                 require_once(ABSPATH . 'wp-admin/includes/plugin.php');
             }
 
@@ -114,7 +121,8 @@ class rzp_payment_button_widget extends WP_Widget
 /**
  * Register and load the widget
  */
-function rzp_payment_button_load_widget() {
+function rzp_payment_button_load_widget()
+{
     register_widget('rzp_payment_button_widget');
 }
 

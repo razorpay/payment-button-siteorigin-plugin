@@ -42,7 +42,7 @@ function bootstrap_scripts_enqueue_siteorigin($hook_suffix)
 if (!class_exists('RZP_Payment_Button_SiteOrigin_Loader'))
 {
 
-	// Adding constants
+    // Adding constants
     if (!defined('RZP_PAYMENT_SITEORIGIN_BASE_NAME'))
     {
         define('RZP_PAYMENT_SITEORIGIN_BASE_NAME', plugin_basename(__FILE__));
@@ -54,18 +54,19 @@ if (!class_exists('RZP_Payment_Button_SiteOrigin_Loader'))
         define('RZP_REDIRECT_URL', esc_url(admin_url('admin-post.php')));
     }
 
-	class RZP_Payment_Button_SiteOrigin_Loader {
-		/**
-		 * Start up
-		 */
-		public function __construct()
-		{
-		    add_action('admin_menu', array($this, 'rzp_add_plugin_page'));
+    class RZP_Payment_Button_SiteOrigin_Loader
+    {
+        /**
+         * Start up
+         */
+        public function __construct()
+        {
+            add_action('admin_menu', array($this, 'rzp_add_plugin_page'));
 
-			add_filter('plugin_action_links_' . RZP_PAYMENT_SITEORIGIN_BASE_NAME, array($this, 'razorpay_plugin_links'));
+            add_filter('plugin_action_links_' . RZP_PAYMENT_SITEORIGIN_BASE_NAME, array($this, 'razorpay_plugin_links'));
 
             $this->settings = new RZP_Payment_Button_SiteOrigin_Setting();
-		}
+        }
 
         /**
          * Creating the menu for plugin after load
@@ -102,7 +103,7 @@ if (!class_exists('RZP_Payment_Button_SiteOrigin_Loader'))
 
             $secret = get_option('key_secret_field');
 
-            if (empty($key) === false && empty($secret) === false)
+            if (empty($key) === false and empty($secret) === false)
             {
                 return new Api($key, $secret);
             }
@@ -112,13 +113,14 @@ if (!class_exists('RZP_Payment_Button_SiteOrigin_Loader'))
                      </div>');
         }
 
-		/**
+        /**
          * Creating the settings link from the plug ins page
         **/
         function razorpay_plugin_links($links)
         {
             $pluginLinks = array(
                             'settings' => '<a href="'. esc_url(admin_url('admin.php?page=razorpay_siteorigin_settings')) .'">Settings</a>',
+                            'docs'     => '<a href="https://razorpay.com/docs/payments/payment-button/supported-platforms/wordpress/site-origin/">Docs</a>',
                             'support'  => '<a href="https://razorpay.com/contact/">Support</a>'
                         );
 
@@ -127,15 +129,15 @@ if (!class_exists('RZP_Payment_Button_SiteOrigin_Loader'))
             return $links;
         }
 
-		/**
-		 * Razorpay Payment Button Page
-		 */
-		public function rzp_view_buttons_page()
-		{
-			$rzp_payment_buttons = new RZP_Payment_Buttons_SiteOrigin();
+        /**
+         * Razorpay Payment Button Page
+         */
+        public function rzp_view_buttons_page()
+        {
+            $rzp_payment_buttons = new RZP_Payment_Buttons_SiteOrigin();
 
-			$rzp_payment_buttons->rzp_buttons();
-		}
+            $rzp_payment_buttons->rzp_buttons();
+        }
 
         /**
          * Razorpay Subscription Button Page
@@ -164,7 +166,7 @@ if (!class_exists('RZP_Payment_Button_SiteOrigin_Loader'))
 
             $new_button->razorpay_view_button();
         }
-	}
+    }
 }
 
 /**
@@ -187,7 +189,8 @@ include_once(__DIR__.'/widgets/subscription_button/subscription_button.php');
 /**
  * Razorpay widgets tab for siteorigin editor
  */
-function add_razorpay_widget_tabs($tabs) {
+function add_razorpay_widget_tabs($tabs)
+{
     $tabs[] = array(
         'title' => __('Razorpay Widgets', 'razorpay'),
         'filter' => array(

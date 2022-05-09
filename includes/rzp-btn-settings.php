@@ -30,7 +30,7 @@ class RZP_Payment_Button_SiteOrigin_Setting
         $this->template->razorpaySettings();
     }
 
-	/**
+    /**
      * Uses Settings API to create fields
     **/
     function displayOptions()
