@@ -1,4 +1,5 @@
 <?php
+
 require_once __DIR__.'/../templates/razorpay-button-view-templates.php';
 
 class RZP_View_Button_SiteOrigin

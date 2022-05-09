@@ -1,4 +1,5 @@
 <?php
+
 class RZP_View_Button_SiteOrigin_Templates
 {
     public function __construct()
