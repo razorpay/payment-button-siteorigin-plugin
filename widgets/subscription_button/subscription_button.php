@@ -22,7 +22,8 @@ class rzp_subscription_button_widget extends WP_Widget
      */
     public function form($instance)
     {
-        if (isset($instance['subscription_button_id'])) {
+        if (isset($instance['subscription_button_id']))
+        {
             $subscription_button = $instance['subscription_button_id'];
         }
         else
@@ -83,10 +84,12 @@ class rzp_subscription_button_widget extends WP_Widget
      */
     public function widget($args, $instance)
     {
-        if ($instance['subscription_button_id']) {
+        if ($instance['subscription_button_id'])
+        {
             $subscription_button = $instance['subscription_button_id'];
 
-            if (!function_exists('get_plugin_data')) {
+            if (!function_exists('get_plugin_data'))
+            {
                 require_once(ABSPATH . 'wp-admin/includes/plugin.php');
             }
 
@@ -113,7 +116,8 @@ class rzp_subscription_button_widget extends WP_Widget
 /**
  * Register and load the widget
  */
-function rzp_subscription_button_load_widget() {
+function rzp_subscription_button_load_widget()
+{
     register_widget('rzp_subscription_button_widget');
 }
 

@@ -1,13 +1,15 @@
 <?php
-if(! class_exists('WP_List_Table')) {
-    require_once( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' );
+
+if(! class_exists('WP_List_Table'))
+{
+    require_once(ABSPATH . 'wp-admin/includes/class-wp-list-table.php');
 }
 
 /**
  * Class RZP_Subscription_Buttons_SiteOrigin
  */
-class RZP_Subscription_Buttons_SiteOrigin extends WP_List_Table {
-        
+class RZP_Subscription_Buttons_SiteOrigin extends WP_List_Table
+{
     function __construct() 
     {
         parent::__construct( 
@@ -49,7 +51,6 @@ class RZP_Subscription_Buttons_SiteOrigin extends WP_List_Table {
      */
     function get_columns() 
     {
-
         $columns = array(
             'title'=>__('Title'),
             'total_sales'=>__('Total Sales'),
@@ -70,10 +71,8 @@ class RZP_Subscription_Buttons_SiteOrigin extends WP_List_Table {
             case 'created_at':
             case 'status':
                 return $item[ $column_name ];
-
             default:
-          
-            return print_r($item, true) ; //Show the whole array for troubleshooting purposes
+                return print_r($item, true) ; //Show the whole array for troubleshooting purposes
         }
     }       
         
@@ -89,18 +88,18 @@ class RZP_Subscription_Buttons_SiteOrigin extends WP_List_Table {
         $views = array();
 
         //All Buttons
-        $class = ($current == 'all' ? ' class="current"' :'');
+        $class = ($current === 'all' ? ' class="current"' :'');
         $all_url = remove_query_arg('status');
         $views['all'] = "<a href='{$all_url }' {$class} >All</a>";
 
         //Active buttons
         $foo_url = add_query_arg('status','active');
-        $class = ($current == 'active' ? ' class="current"' :'');
+        $class = ($current === 'active' ? ' class="current"' :'');
         $views['status'] = "<a href='{$foo_url}' {$class} >Enabled</a>";
 
         //Inactive buttons
         $bar_url = add_query_arg('status','inactive');
-        $class = ($current == 'inactive' ? ' class="current"' :'');
+        $class = ($current === 'inactive' ? ' class="current"' :'');
         $views['disabled'] = "<a href='{$bar_url}' {$class} >Disabled</a>";
 
         return $views;
@@ -114,7 +113,7 @@ class RZP_Subscription_Buttons_SiteOrigin extends WP_List_Table {
      */
     function usort_reorder($a, $b)
     {
-        if(isset($_GET['orderby']) && isset($_GET['order']))
+        if(isset($_GET['orderby']) and isset($_GET['order']))
         {
             // If no sort, default to title
             $orderby = (! empty(sanitize_text_field($_GET['orderby']))) ? sanitize_text_field($_GET['orderby']) : 'title';
@@ -125,7 +124,6 @@ class RZP_Subscription_Buttons_SiteOrigin extends WP_List_Table {
             // Send final sort direction to usort
             return ($order === 'asc') ? $result : -$result;
         }
-        
     }
 
     /**
@@ -134,8 +132,9 @@ class RZP_Subscription_Buttons_SiteOrigin extends WP_List_Table {
     function get_sortable_columns() 
     {
         $sortable_columns = array(
-        'title'  => array('title',false),
+            'title'  => array('title',false),
         );
+
         return $sortable_columns;
     }
 
@@ -178,9 +177,11 @@ class RZP_Subscription_Buttons_SiteOrigin extends WP_List_Table {
         $count = count($payment_page);
         $payment_pages = array();
 
-        for($i=0;$i<$count;$i++){
-            if($i >= $offset && $i < $offset+$per_page){
-                $payment_pages[]=$payment_page[$i];
+        for($i=0;$i<$count;$i++)
+        {
+            if($i >= $offset and $i < $offset+$per_page)
+            {
+                $payment_pages[] = $payment_page[$i];
             }
         }
 
@@ -193,11 +194,13 @@ class RZP_Subscription_Buttons_SiteOrigin extends WP_List_Table {
         $this->items = $payment_pages;
 
         // Set the pagination
-        $this->set_pagination_args(array(
-            'total_items' => $count,
-            'per_page'    => $per_page,
-            'total_pages' => ceil($count / $per_page)
-        ) );
+        $this->set_pagination_args(
+            array(
+                'total_items' => $count,
+                'per_page'    => $per_page,
+                'total_pages' => ceil($count / $per_page)
+            )
+        );
     }
 
     /**
@@ -238,6 +241,7 @@ class RZP_Subscription_Buttons_SiteOrigin extends WP_List_Table {
               );
             }
           }
+
         return $items;
     }
 }
