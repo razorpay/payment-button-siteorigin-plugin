@@ -4,7 +4,7 @@
  * Plugin Name: Razorpay Payment Button for SiteOrigin
  * Plugin URI:  https://github.com/razorpay/payment-button-siteorigin-plugin
  * Description: Razorpay Payment Button for SiteOrigin
- * Version:     1.0.2
+ * Version:     1.0.3
  * Author:      Razorpay
  * Author URI:  https://razorpay.com
  */
